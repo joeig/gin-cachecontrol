@@ -1,4 +1,4 @@
-package cacheControl_test
+package cachecontrol_test
 
 import (
 	"net/http"

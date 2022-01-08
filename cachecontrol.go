@@ -1,4 +1,4 @@
-package cacheControl
+package cachecontrol
 
 import (
 	"fmt"
