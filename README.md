@@ -1,6 +1,6 @@
 # Cache-Control middleware for Gin
 
-This Gin middleware generates cache control headers.
+This Gin middleware generates cache control-headers.
 
 [![Build Status](https://github.com/joeig/gin-cachecontrol/workflows/Tests/badge.svg)](https://github.com/joeig/gin-cachecontrol/actions)
 [![Go Report Card](https://goreportcard.com/badge/github.com/joeig/gin-cachecontrol)](https://goreportcard.com/report/github.com/joeig/gin-cachecontrol)
@@ -16,13 +16,13 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	cacheControl "github.com/joeig/gin-cachecontrol"
+	"github.com/joeig/gin-cachecontrol"
 )
 
 func main() {
 	router := gin.Default()
 
-	router.Use(cacheControl.New(&cacheControl.Config{
+	router.Use(cachecontrol.New(&cachecontrol.Config{
 		MustRevalidate:       true,
 		NoCache:              false,
 		NoStore:              false,
@@ -30,15 +30,15 @@ func main() {
 		Public:               true,
 		Private:              false,
 		ProxyRevalidate:      true,
-		MaxAge:               cacheControl.Duration(30 * time.Minute),
+		MaxAge:               cachecontrol.Duration(30 * time.Minute),
 		SMaxAge:              nil,
 		Immutable:            false,
-		StaleWhileRevalidate: cacheControl.Duration(2 * time.Hour),
-		StaleIfError:         cacheControl.Duration(2 * time.Hour),
+		StaleWhileRevalidate: cachecontrol.Duration(2 * time.Hour),
+		StaleIfError:         cachecontrol.Duration(2 * time.Hour),
 	}))
 
 	// Alternatively, you can choose a preset:
-	// router.Use(cacheControl.New(cacheControl.NoCachePreset))
+	// router.Use(cachecontrol.New(cachecontrol.NoCachePreset))
 
 	router.GET("/", func(ginCtx *gin.Context) {
 		ginCtx.String(http.StatusOK, "Hello, Gopher!")

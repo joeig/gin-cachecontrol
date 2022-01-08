@@ -5,13 +5,13 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	cacheControl "github.com/joeig/gin-cachecontrol"
+	"github.com/joeig/gin-cachecontrol"
 )
 
 func ExampleNew() {
 	router := gin.Default()
 
-	router.Use(cacheControl.New(&cacheControl.Config{
+	router.Use(cachecontrol.New(&cachecontrol.Config{
 		MustRevalidate:       true,
 		NoCache:              false,
 		NoStore:              false,
@@ -19,11 +19,11 @@ func ExampleNew() {
 		Public:               true,
 		Private:              false,
 		ProxyRevalidate:      true,
-		MaxAge:               cacheControl.Duration(30 * time.Minute),
+		MaxAge:               cachecontrol.Duration(30 * time.Minute),
 		SMaxAge:              nil,
 		Immutable:            false,
-		StaleWhileRevalidate: cacheControl.Duration(2 * time.Hour),
-		StaleIfError:         cacheControl.Duration(2 * time.Hour),
+		StaleWhileRevalidate: cachecontrol.Duration(2 * time.Hour),
+		StaleIfError:         cachecontrol.Duration(2 * time.Hour),
 	}))
 
 	router.GET("/", func(ginCtx *gin.Context) {
