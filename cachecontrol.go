@@ -32,68 +32,68 @@ type Config struct {
 
 // New creates a new Gin middleware which generates a cache-control header.
 func New(config *Config) gin.HandlerFunc {
-	return func(c *gin.Context) {
-		config.apply(c)
+	return func(ginCtx *gin.Context) {
+		config.apply(ginCtx, config.buildCacheControl())
 	}
 }
 
 func (c *Config) buildCacheControl() string {
-	var cc []string
+	var values []string
 
 	if c.MustRevalidate {
-		cc = append(cc, "must-revalidate")
+		values = append(values, "must-revalidate")
 	}
 
 	if c.NoCache {
-		cc = append(cc, "no-cache")
+		values = append(values, "no-cache")
 	}
 
 	if c.NoStore {
-		cc = append(cc, "no-store")
+		values = append(values, "no-store")
 	}
 
 	if c.NoTransform {
-		cc = append(cc, "no-transform")
+		values = append(values, "no-transform")
 	}
 
 	if c.Public {
-		cc = append(cc, "public")
+		values = append(values, "public")
 	}
 
 	if c.Private {
-		cc = append(cc, "private")
+		values = append(values, "private")
 	}
 
 	if c.ProxyRevalidate {
-		cc = append(cc, "proxy-revalidate")
+		values = append(values, "proxy-revalidate")
 	}
 
 	if c.MaxAge != nil {
-		cc = append(cc, fmt.Sprintf("max-age=%.f", c.MaxAge.Seconds()))
+		values = append(values, fmt.Sprintf("max-age=%.f", c.MaxAge.Seconds()))
 	}
 
 	if c.SMaxAge != nil {
-		cc = append(cc, fmt.Sprintf("s-maxage=%.f", c.SMaxAge.Seconds()))
+		values = append(values, fmt.Sprintf("s-maxage=%.f", c.SMaxAge.Seconds()))
 	}
 
 	if c.Immutable {
-		cc = append(cc, "immutable")
+		values = append(values, "immutable")
 	}
 
 	if c.StaleWhileRevalidate != nil {
-		cc = append(cc, fmt.Sprintf("stale-while-revalidate=%.f", c.StaleWhileRevalidate.Seconds()))
+		values = append(values, fmt.Sprintf("stale-while-revalidate=%.f", c.StaleWhileRevalidate.Seconds()))
 	}
 
 	if c.StaleIfError != nil {
-		cc = append(cc, fmt.Sprintf("stale-if-error=%.f", c.StaleIfError.Seconds()))
+		values = append(values, fmt.Sprintf("stale-if-error=%.f", c.StaleIfError.Seconds()))
 	}
 
-	return strings.Join(cc, ", ")
+	return strings.Join(values, ", ")
 }
 
-func (c *Config) apply(ginCtx *gin.Context) {
+func (c *Config) apply(ginCtx *gin.Context, headerValue string) {
 	header := ginCtx.Writer.Header()
-	header.Set(cacheControlHeader, c.buildCacheControl())
+	header.Set(cacheControlHeader, headerValue)
 }
 
 // NoCachePreset is a cache-control configuration preset which advices the HTTP client not to cache at all.

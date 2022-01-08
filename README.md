@@ -1,6 +1,6 @@
 # Cache-Control middleware for Gin
 
-This Gin middleware generates cache control-headers.
+This Gin middleware generates cache-control headers.
 
 [![Build Status](https://github.com/joeig/gin-cachecontrol/workflows/Tests/badge.svg)](https://github.com/joeig/gin-cachecontrol/actions)
 [![Go Report Card](https://goreportcard.com/badge/github.com/joeig/gin-cachecontrol)](https://goreportcard.com/report/github.com/joeig/gin-cachecontrol)
