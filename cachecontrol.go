@@ -11,9 +11,10 @@ import (
 const cacheControlHeader = "Cache-Control"
 
 // Config defines a cache-control configuration.
+//
 // References:
-// - https://datatracker.ietf.org/doc/html/rfc7234#section-5.2.2
-// - https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control
+// https://datatracker.ietf.org/doc/html/rfc7234#section-5.2.2
+// https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control
 type Config struct {
 	MustRevalidate       bool
 	NoCache              bool
@@ -100,6 +101,15 @@ var NoCachePreset = &Config{
 	MustRevalidate: true,
 	NoCache:        true,
 	NoStore:        true,
+}
+
+// CacheAssetsForeverPreset is a cache-control configuration preset which advices the HTTP client
+// and all caches in between to cache the object forever without revalidation.
+// Technically, "forever" means 1 year, in order to comply with common CDN limits.
+var CacheAssetsForeverPreset = &Config{
+	Public:    true,
+	MaxAge:    Duration(8760 * time.Hour),
+	Immutable: true,
 }
 
 // Duration is a helper function which returns a time.Duration pointer.

@@ -80,6 +80,11 @@ func TestNew(t *testing.T) {
 			config: NoCachePreset,
 			want:   "must-revalidate, no-cache, no-store",
 		},
+		{
+			name:   "CacheAssetsForeverPreset",
+			config: CacheAssetsForeverPreset,
+			want:   "public, max-age=31536000, immutable",
+		},
 	}
 
 	for _, tt := range tests {
