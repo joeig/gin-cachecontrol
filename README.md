@@ -22,7 +22,7 @@ import (
 func main() {
 	router := gin.Default()
 
-	router.Use(cachecontrol.New(&cachecontrol.Config{
+	router.Use(cachecontrol.New(cachecontrol.Config{
 		MustRevalidate:       true,
 		NoCache:              false,
 		NoStore:              false,
