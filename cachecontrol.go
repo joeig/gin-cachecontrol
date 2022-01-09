@@ -8,7 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-const cacheControlHeader = "Cache-Control"
+const CacheControlHeader = "Cache-Control"
 
 // Config defines a cache-control configuration.
 //
@@ -28,13 +28,6 @@ type Config struct {
 	Immutable            bool
 	StaleWhileRevalidate *time.Duration
 	StaleIfError         *time.Duration
-}
-
-// New creates a new Gin middleware which generates a cache-control header.
-func New(config *Config) gin.HandlerFunc {
-	return func(ginCtx *gin.Context) {
-		config.apply(ginCtx, config.buildCacheControl())
-	}
 }
 
 func (c *Config) buildCacheControl() string {
@@ -91,13 +84,29 @@ func (c *Config) buildCacheControl() string {
 	return strings.Join(values, ", ")
 }
 
-func (c *Config) apply(ginCtx *gin.Context, headerValue string) {
+func (c *Config) apply(ginCtx *gin.Context, value string) {
 	header := ginCtx.Writer.Header()
-	header.Set(cacheControlHeader, headerValue)
+	header.Set(CacheControlHeader, value)
+}
+
+// New creates a new Gin middleware which generates a cache-control header.
+// Existing cache-control headers are removed.
+// Other caching-related headers, such as `Expires` and `Pragma`, remain unchanged.
+func New(config Config) gin.HandlerFunc {
+	value := config.buildCacheControl()
+
+	return func(ginCtx *gin.Context) {
+		config.apply(ginCtx, value)
+	}
+}
+
+// Duration is a helper function which returns a time.Duration pointer.
+func Duration(duration time.Duration) *time.Duration {
+	return &duration
 }
 
 // NoCachePreset is a cache-control configuration preset which advices the HTTP client not to cache at all.
-var NoCachePreset = &Config{
+var NoCachePreset = Config{
 	MustRevalidate: true,
 	NoCache:        true,
 	NoStore:        true,
@@ -106,13 +115,8 @@ var NoCachePreset = &Config{
 // CacheAssetsForeverPreset is a cache-control configuration preset which advices the HTTP client
 // and all caches in between to cache the object forever without revalidation.
 // Technically, "forever" means 1 year, in order to comply with common CDN limits.
-var CacheAssetsForeverPreset = &Config{
+var CacheAssetsForeverPreset = Config{
 	Public:    true,
 	MaxAge:    Duration(8760 * time.Hour),
 	Immutable: true,
-}
-
-// Duration is a helper function which returns a time.Duration pointer.
-func Duration(duration time.Duration) *time.Duration {
-	return &duration
 }
