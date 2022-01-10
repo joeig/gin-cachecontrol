@@ -1,4 +1,4 @@
-module github.com/joeig/gin-cachecontrol
+module github.com/joeig/gin-cachecontrol/v2
 
 go 1.17
 
