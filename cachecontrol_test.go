@@ -8,7 +8,7 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/joeig/gin-cachecontrol"
+	"github.com/joeig/gin-cachecontrol/v2"
 )
 
 const (
