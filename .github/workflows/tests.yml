@@ -9,7 +9,7 @@ jobs:
       - name: Set up Go ${{ matrix.goVer }}
         uses: actions/setup-go@v1
         with:
-          go-version: 1.17
+          go-version: 1.18
       - name: Check out code into the Go module directory
         uses: actions/checkout@v1
       - name: GolangCI-Lint
@@ -19,14 +19,14 @@ jobs:
           $(go env GOPATH)/bin/golangci-lint run
       - name: Staticcheck
         run: |
-          GO111MODULE=off go get -u honnef.co/go/tools/cmd/staticcheck
+          go install honnef.co/go/tools/cmd/staticcheck@latest
           $(go env GOPATH)/bin/staticcheck ./...
   test:
     name: Test
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        goVer: [1.15, 1.16, 1.17]
+        goVer: [1.16, 1.17, 1.18]
     steps:
       - name: Set up Go ${{ matrix.goVer }}
         uses: actions/setup-go@v1
