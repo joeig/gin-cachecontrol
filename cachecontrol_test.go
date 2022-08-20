@@ -130,5 +130,5 @@ func ExampleNew() {
 		ginCtx.String(http.StatusOK, "Hello, Gopher!")
 	})
 
-	router.Run()
+	_ = router.Run()
 }
