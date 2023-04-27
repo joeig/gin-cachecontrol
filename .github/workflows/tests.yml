@@ -35,3 +35,7 @@ jobs:
         uses: actions/checkout@v3
       - name: Make
         run: make
+      - name: Check test coverage threshold
+        uses: vladopajic/go-test-coverage@v2
+        with:
+          config: ./.github/testcoverage.yml
