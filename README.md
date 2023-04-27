@@ -3,6 +3,7 @@
 This Gin middleware generates cache-control headers.
 
 [![Build Status](https://github.com/joeig/gin-cachecontrol/workflows/Tests/badge.svg)](https://github.com/joeig/gin-cachecontrol/actions)
+[![Test coverage](https://img.shields.io/badge/coverage-100%25-success)](https://github.com/joeig/gin-cachecontrol/tree/master/.github/testcoverage.yml)
 [![Go Report Card](https://goreportcard.com/badge/github.com/joeig/gin-cachecontrol)](https://goreportcard.com/report/github.com/joeig/gin-cachecontrol)
 [![PkgGoDev](https://pkg.go.dev/badge/github.com/joeig/gin-cachecontrol)](https://pkg.go.dev/github.com/joeig/gin-cachecontrol)
 
