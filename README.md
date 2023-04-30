@@ -51,4 +51,4 @@ func main() {
 
 ## Documentation
 
-See [Go reference](https://pkg.go.dev/badge/go.eigsys.de/gin-cachecontrol/v2).
+See [Go reference](https://pkg.go.dev/go.eigsys.de/gin-cachecontrol/v2).
