@@ -4,8 +4,8 @@ This Gin middleware generates cache-control headers.
 
 [![Build Status](https://github.com/joeig/gin-cachecontrol/workflows/Tests/badge.svg)](https://github.com/joeig/gin-cachecontrol/actions)
 [![Test coverage](https://img.shields.io/badge/coverage-100%25-success)](https://github.com/joeig/gin-cachecontrol/tree/master/.github/testcoverage.yml)
-[![Go Report Card](https://goreportcard.com/badge/go.eigsys.de/gin-cachecontrol)](https://goreportcard.com/report/go.eigsys.de/gin-cachecontrol)
-[![PkgGoDev](https://pkg.go.dev/badge/go.eigsys.de/gin-cachecontrol)](https://pkg.go.dev/go.eigsys.de/gin-cachecontrol)
+[![Go Report Card](https://goreportcard.com/badge/go.eigsys.de/gin-cachecontrol/v2)](https://goreportcard.com/report/go.eigsys.de/gin-cachecontrol/v2)
+[![PkgGoDev](https://pkg.go.dev/badge/go.eigsys.de/gin-cachecontrol/v2)](https://pkg.go.dev/go.eigsys.de/gin-cachecontrol/v2)
 
 ## Usage
 
@@ -51,4 +51,4 @@ func main() {
 
 ## Documentation
 
-See [GoDoc](https://godoc.org/go.eigsys.de/gin-cachecontrol).
+See [Go reference](https://pkg.go.dev/badge/go.eigsys.de/gin-cachecontrol/v2).
