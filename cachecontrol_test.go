@@ -2,13 +2,13 @@ package cachecontrol_test
 
 import (
 	"context"
+	cachecontrol "go.eigsys.de/gin-cachecontrol/v2"
 	"net/http"
 	"net/http/httptest"
 	"testing"
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/joeig/gin-cachecontrol/v2"
 )
 
 const (
