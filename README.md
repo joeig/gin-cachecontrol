@@ -33,7 +33,7 @@ r.GET("/favicon.ico", cacheForever, faviconHandler)
 Supported presets ([documentation](https://pkg.go.dev/go.eigsys.de/gin-cachecontrol/v2#pkg-variables)):
 
 * `cachecontrol.NoCachePreset`
-* `cachecontrol.CacheAssetsForeverPreset` (you may only want this only for carefully selected routes)
+* `cachecontrol.CacheAssetsForeverPreset` (you may only want this for carefully selected routes)
 
 ### With a custom configuration
 
