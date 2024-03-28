@@ -7,46 +7,55 @@ This Gin middleware generates cache-control headers.
 [![Go Report Card](https://goreportcard.com/badge/go.eigsys.de/gin-cachecontrol/v2)](https://goreportcard.com/report/go.eigsys.de/gin-cachecontrol/v2)
 [![PkgGoDev](https://pkg.go.dev/badge/go.eigsys.de/gin-cachecontrol/v2)](https://pkg.go.dev/go.eigsys.de/gin-cachecontrol/v2)
 
-## Usage
+## Setup
+
+```shell
+go get -u go.eigsys.de/gin-cachecontrol/v2
+```
 
 ```go
-package main
+import "go.eigsys.de/gin-cachecontrol/v2"
+```
 
-import (
-	"net/http"
-	"time"
+## Usage
 
-	"github.com/gin-gonic/gin"
-	"go.eigsys.de/gin-cachecontrol/v2"
+### With a preset
+
+```go
+// Apply globally:
+r.Use(cachecontrol.New(cachecontrol.NoCachePreset))
+
+// Apply to specific routes:
+cacheForever := cachecontrol.New(cachecontrol.CacheAssetsForeverPreset)
+r.GET("/favicon.ico", cacheForever, faviconHandler)
+```
+
+Supported presets ([documentation](https://pkg.go.dev/go.eigsys.de/gin-cachecontrol/v2#pkg-variables)):
+
+* `cachecontrol.NoCachePreset`
+* `cachecontrol.CacheAssetsForeverPreset` (you may only want this only for carefully selected routes)
+
+### With a custom configuration
+
+```go
+r.Use(
+    cachecontrol.New(
+        cachecontrol.Config{
+            MustRevalidate:       true,
+            NoCache:              false,
+            NoStore:              false,
+            NoTransform:          false,
+            Public:               true,
+            Private:              false,
+            ProxyRevalidate:      true,
+            MaxAge:               cachecontrol.Duration(30 * time.Minute),
+            SMaxAge:              nil,
+            Immutable:            false,
+            StaleWhileRevalidate: cachecontrol.Duration(2 * time.Hour),
+            StaleIfError:         cachecontrol.Duration(2 * time.Hour),
+        }
+    )
 )
-
-func main() {
-	router := gin.Default()
-
-	router.Use(cachecontrol.New(cachecontrol.Config{
-		MustRevalidate:       true,
-		NoCache:              false,
-		NoStore:              false,
-		NoTransform:          false,
-		Public:               true,
-		Private:              false,
-		ProxyRevalidate:      true,
-		MaxAge:               cachecontrol.Duration(30 * time.Minute),
-		SMaxAge:              nil,
-		Immutable:            false,
-		StaleWhileRevalidate: cachecontrol.Duration(2 * time.Hour),
-		StaleIfError:         cachecontrol.Duration(2 * time.Hour),
-	}))
-
-	// Alternatively, you can choose a preset:
-	// router.Use(cachecontrol.New(cachecontrol.NoCachePreset))
-
-	router.GET("/", func(ginCtx *gin.Context) {
-		ginCtx.String(http.StatusOK, "Hello, Gopher!")
-	})
-
-	router.Run()
-}
 ```
 
 ## Documentation
