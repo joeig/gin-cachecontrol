@@ -1,5 +1,5 @@
 ---
-profile: ./c.out
+profile: "coverage.out"
 threshold:
   # Note: Update README.md in case thresholds change.
   file: 100
