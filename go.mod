@@ -1,6 +1,6 @@
 module go.eigsys.de/gin-cachecontrol/v2
 
-go 1.21
+go 1.23
 
 require github.com/gin-gonic/gin v1.10.0
 
