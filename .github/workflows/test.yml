@@ -26,6 +26,6 @@ jobs:
           go-version: ${{ matrix.go-version }}
       - run: go test -v -coverprofile="coverage.out" ./...
       - run: go tool cover -func="coverage.out"
-      - uses: vladopajic/go-test-coverage@v2.13.0
+      - uses: vladopajic/go-test-coverage@v2.13.1
         with:
           config: ".github/testcoverage.yml"
