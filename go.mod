@@ -2,7 +2,7 @@ module go.eigsys.de/gin-cachecontrol/v2
 
 go 1.23.0
 
-require github.com/gin-gonic/gin v1.10.0
+require github.com/gin-gonic/gin v1.10.1
 
 require (
 	github.com/bytedance/sonic v1.11.6 // indirect
