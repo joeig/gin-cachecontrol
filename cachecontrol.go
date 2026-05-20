@@ -191,14 +191,20 @@ func New(config Config) gin.HandlerFunc {
 // from functional options. Existing cache-control headers are removed.
 // Other caching-related headers, such as `Expires` and `Pragma`, remain unchanged.
 func NewWithOptions(options ...ConfigOption) gin.HandlerFunc {
-	config := Config{}
+	config := ApplyOptionsToConfig(Config{}, options...)
+	return New(config)
+}
+
+// ApplyOptionsToConfig applies functional options to a cache-control configuration.
+// Nil options are ignored.
+func ApplyOptionsToConfig(config Config, options ...ConfigOption) Config {
 	for _, option := range options {
 		if option == nil {
 			continue
 		}
 		option(&config)
 	}
-	return New(config)
+	return config
 }
 
 // Duration is a helper function which returns a time.Duration pointer.
