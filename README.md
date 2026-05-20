@@ -57,6 +57,23 @@ r.Use(
 )
 ```
 
+### With functional options
+
+```go
+r.Use(
+    cachecontrol.NewWithOptions(
+        cachecontrol.WithMustRevalidate(true),
+        cachecontrol.WithPublic(true),
+        cachecontrol.WithProxyRevalidate(true),
+        cachecontrol.WithMaxAge(cachecontrol.Duration(30 * time.Minute)),
+        cachecontrol.WithStaleWhileRevalidate(cachecontrol.Duration(2 * time.Hour)),
+        cachecontrol.WithStaleIfError(cachecontrol.Duration(2 * time.Hour)),
+    ),
+)
+```
+
+Note: If duplicate or conflicting options are specified, the final option will be used.
+
 ## Documentation
 
 See [Go reference](https://pkg.go.dev/go.eigsys.de/gin-cachecontrol/v2).

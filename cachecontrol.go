@@ -30,6 +30,93 @@ type Config struct {
 	StaleIfError         *time.Duration
 }
 
+// ConfigOption mutates a cache-control configuration.
+type ConfigOption func(*Config)
+
+// WithMustRevalidate configures the must-revalidate directive.
+func WithMustRevalidate(value bool) ConfigOption {
+	return func(config *Config) {
+		config.MustRevalidate = value
+	}
+}
+
+// WithNoCache configures the no-cache directive.
+func WithNoCache(value bool) ConfigOption {
+	return func(config *Config) {
+		config.NoCache = value
+	}
+}
+
+// WithNoStore configures the no-store directive.
+func WithNoStore(value bool) ConfigOption {
+	return func(config *Config) {
+		config.NoStore = value
+	}
+}
+
+// WithNoTransform configures the no-transform directive.
+func WithNoTransform(value bool) ConfigOption {
+	return func(config *Config) {
+		config.NoTransform = value
+	}
+}
+
+// WithPublic configures the public directive.
+func WithPublic(value bool) ConfigOption {
+	return func(config *Config) {
+		config.Public = value
+	}
+}
+
+// WithPrivate configures the private directive.
+func WithPrivate(value bool) ConfigOption {
+	return func(config *Config) {
+		config.Private = value
+	}
+}
+
+// WithProxyRevalidate configures the proxy-revalidate directive.
+func WithProxyRevalidate(value bool) ConfigOption {
+	return func(config *Config) {
+		config.ProxyRevalidate = value
+	}
+}
+
+// WithMaxAge configures the max-age directive.
+func WithMaxAge(value *time.Duration) ConfigOption {
+	return func(config *Config) {
+		config.MaxAge = value
+	}
+}
+
+// WithSMaxAge configures the s-maxage directive.
+func WithSMaxAge(value *time.Duration) ConfigOption {
+	return func(config *Config) {
+		config.SMaxAge = value
+	}
+}
+
+// WithImmutable configures the immutable directive.
+func WithImmutable(value bool) ConfigOption {
+	return func(config *Config) {
+		config.Immutable = value
+	}
+}
+
+// WithStaleWhileRevalidate configures the stale-while-revalidate directive.
+func WithStaleWhileRevalidate(value *time.Duration) ConfigOption {
+	return func(config *Config) {
+		config.StaleWhileRevalidate = value
+	}
+}
+
+// WithStaleIfError configures the stale-if-error directive.
+func WithStaleIfError(value *time.Duration) ConfigOption {
+	return func(config *Config) {
+		config.StaleIfError = value
+	}
+}
+
 func (c *Config) buildCacheControl() string {
 	var values []string
 
@@ -98,6 +185,20 @@ func New(config Config) gin.HandlerFunc {
 	return func(ginCtx *gin.Context) {
 		config.apply(ginCtx, value)
 	}
+}
+
+// NewWithOptions creates a new Gin middleware which generates a cache-control header
+// from functional options. Existing cache-control headers are removed.
+// Other caching-related headers, such as `Expires` and `Pragma`, remain unchanged.
+func NewWithOptions(options ...ConfigOption) gin.HandlerFunc {
+	config := Config{}
+	for _, option := range options {
+		if option == nil {
+			continue
+		}
+		option(&config)
+	}
+	return New(config)
 }
 
 // Duration is a helper function which returns a time.Duration pointer.
